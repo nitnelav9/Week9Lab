@@ -5,10 +5,28 @@
  */
 package services;
 
+import dataaccess.RoleDBUtil;
+import java.util.List;
+import static jdk.nashorn.internal.runtime.Debug.id;
+import models.Role;
+import models.User;
+
 /**
  *
  * @author valentinmorales
  */
 public class RoleService {
+    
+    public Role get(User user) throws Exception {
+        RoleDBUtil roleDB = new RoleDBUtil();
+        Role role = roleDB.get(user);
+        return role;
+    }
+    
+    public List<Role> getAll() throws Exception {
+        RoleDBUtil roleDB = new RoleDBUtil();
+        List<Role> roles = roleDB.getAll();
+        return roles;
+    }
     
 }

@@ -19,7 +19,7 @@ import models.User;
  */
 public class UserDBUtil {
     
-    public List<User> getAll(String owner) throws Exception {
+    public List<User> getAll() throws Exception {
         List<User> users = new ArrayList<>();
         ConnectionPool cp = ConnectionPool.getInstance();
         Connection con = cp.getConnection();
@@ -101,7 +101,7 @@ public class UserDBUtil {
         ConnectionPool cp = ConnectionPool.getInstance();
         Connection con = cp.getConnection();
         PreparedStatement ps = null;
-        String sql = "UPDATE note SET first_name=?, last_name=?, password=?, role = ? WHERE email=?";
+        String sql = "UPDATE user SET first_name=?, last_name=?, password=?, role = ? WHERE email=?";
         
         try {
             ps = con.prepareStatement(sql);
