@@ -8,16 +8,25 @@ package models;
 
 public class Role {
     private int role_id;
-    private String sole_name;
+    private String role_name;
 
     public Role(int role_id, String sole_name) {
         this.role_id = role_id;
-        this.sole_name = sole_name;
+        this.role_name = role_name;
     }
     /**
      * Creates a new instance of Role
      */
-    public Role() {
+    public Role(int role_id){
+        this.role_id = role_id;
+        if(role_id==1)
+        {
+            this.role_name = "system admin";
+        }
+        if(role_id==2)
+        {
+            this.role_name = "regular user";
+        }
     }
 
     public int getRole_id() {
@@ -28,12 +37,12 @@ public class Role {
         this.role_id = role_id;
     }
 
-    public String getSole_name() {
-        return sole_name;
+    public String getRole_name() {
+        return role_name;
     }
 
     public void setSole_name(String sole_name) {
-        this.sole_name = sole_name;
+        this.role_name = role_name;
     }
     
     
