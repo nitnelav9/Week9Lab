@@ -19,7 +19,7 @@ import models.User;
  */
 public class UserDBUtil {
     
-    public List<User> getAll() throws Exception {
+    public List<User> getAll() throws Exception{
         List<User> users = new ArrayList<>();
         ConnectionPool cp = ConnectionPool.getInstance();
         Connection con = cp.getConnection();
