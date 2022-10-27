@@ -18,7 +18,7 @@
         <form>
            
             <c:if test="${empty users}">
-                <h2>No data found, please add users.</h2>
+                <h2>No users found, please add a user.</h2>
             </c:if>
             <c:if test="${not empty users}">
                 <table border="1px solid black;">
@@ -36,7 +36,7 @@
                         <td>${user.firstName}</td>
                         <td>${user.lastName}</td>
                         <td>${user.role.role_name}</td>
-                        <td><a href="<c:url value='UserServlet?'> <c:param name='action' value='edit'/> <c:param name='email' value='${user.email}'/></c:url>>">Edit</a></td>
+                        <td><a href="<c:url value='UserServle?'> <c:param name='action' value='edit'/> <c:param name='email' value='${user.email}'/></c:url>>">Edit</a></td>
                         <td><a href="<c:url value='UserServlet?'> <c:param name='action' value='delete'/> <c:param name='email' value='${user.email}'/></c:url>>">Delete</a></td>
                     </tr>
                 </c:forEach>
@@ -62,25 +62,31 @@
          </c:if>
         
         <c:if test="${selectedUser ne null}">
-             <form>
+             <form method="post" action="UserServlet">
                 <h1>Edit User</h1>
                 Email: ${selectedUser.email}<br>
                 First Name: <input type="text" name="fname" value="${selectedUser.firstName}"><br>
                 Last Name: <input type="text" name="lname" value="${selectedUser.lastName}"><br>
-                Password: <input type="password" name="password" value="${selectedUser.password}"><br>
+                Password: <input type="password" name="password"><br>
                 Role: <select name="roles">
                 <c:forEach items="${roles}" var="role">
-                    <c:if test="{role.role_id eq selectedUser.role.role_id}">
+                    <c:if test="${role.role_id eq selectedUser.role.role_id}">
                     <option value="${role.role_id}" selected>${role.role_name}</option>
                     </c:if>
-                    <c:if test="{role.role_id ne selectedUser.role.role_id}">
+                    <c:if test="${role.role_id ne selectedUser.role.role_id}">
                     <option value="${role.role_id}">${role.role_name}</option>
                     </c:if>
                 </c:forEach>
             </select><br>
+            <input type="hidden" name="action" value="update">
+            <input type="hidden" name="email" value="${selectedUser.email}">
             <input type="submit" name="action" value="Update">
-            <input type="submit" name="action" value="Cancel">
             </form>
          </c:if>
+        <form>
+            <input type="hidden" name="action" value="cancel">
+            <input type="submit" name="action" value="Cancel">
+        </form>
+        <p>${message}</p>
     </body>
 </html>

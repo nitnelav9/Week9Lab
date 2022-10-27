@@ -42,14 +42,24 @@ public class UserServlet extends HttpServlet {
         RoleService rs = new RoleService();
         String action = request.getParameter("action");    
         
-        /*if (action != null && action.equals("delete")) {
+        if (action != null && action.equals("delete")) {
             try {
                 String email = request.getParameter("email");
                 us.delete(email);
             } catch (Exception ex) {
                 Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }*/
+        }
+        
+        if (action != null && action.equals("edit")) {
+            try {
+                String email = request.getParameter("email");
+                User user = us.get(email);
+                request.setAttribute("selectedUser", user);
+            } catch (Exception ex) {
+                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
 
         try {
             HttpSession session = request.getSession();
@@ -61,16 +71,6 @@ public class UserServlet extends HttpServlet {
             Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        
-        if (action != null && action.equals("edit")) {
-            try {
-                String email = request.getParameter("email");
-                User user = us.get(email);
-                request.setAttribute("selectedUser", user);
-            } catch (Exception ex) {
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
         
         
         
@@ -109,12 +109,36 @@ public class UserServlet extends HttpServlet {
             switch(action)
             {
                 case "add":
-                    us.insert(email, fname, lname, password, role_id);
+                    if(email == null || email =="" || fname == null || fname =="" || lname == null || lname =="" || password == null || password =="")
+                    {
+                        request.setAttribute("message", "All fields are arequired");
+                    }
+                    else
+                    {
+                        us.insert(email, fname, lname, password, role_id);
+                    }
                     break;
-                case "delete":
-                    us.delete(email);
+                case "update":
+                    if(fname == null || fname =="" || lname == null || lname =="" || password == null || password =="")
+                    {
+                        request.setAttribute("message", "All fields are arequired");
+                        User user = us.get(email);
+                        request.setAttribute("selectedUser", user);
+                        //request.setAttribute("email", email);
+                        //request.setAttribute("action", "edit");
+                        //getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
+                        //return;
+                        
+                    }
+                    else
+                    {
+                        us.update(email, fname, lname, password, role_id);
+                    }
                     break;
-                    
+                case "Cancel":
+                    getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
+                    break;
+
             }
         }
         catch(Exception ex)
