@@ -72,10 +72,6 @@ public class UserServlet extends HttpServlet {
         }
         
         
-        
-        
-        
-        
         getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
     }
 
@@ -91,12 +87,13 @@ public class UserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        HttpSession session = request.getSession();
         
         UserService us = new UserService();
         RoleService rs = new RoleService();
         
         String action = request.getParameter("action");
+        
+        
         String email = request.getParameter("email");
         String fname = request.getParameter("fname");
         String lname = request.getParameter("lname");
@@ -124,21 +121,13 @@ public class UserServlet extends HttpServlet {
                         request.setAttribute("message", "All fields are arequired");
                         User user = us.get(email);
                         request.setAttribute("selectedUser", user);
-                        //request.setAttribute("email", email);
-                        //request.setAttribute("action", "edit");
-                        //getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
-                        //return;
-                        
                     }
                     else
                     {
                         us.update(email, fname, lname, password, role_id);
                     }
                     break;
-                case "Cancel":
-                    getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
-                    break;
-
+                    
             }
         }
         catch(Exception ex)

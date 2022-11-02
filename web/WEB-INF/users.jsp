@@ -36,7 +36,7 @@
                         <td>${user.firstName}</td>
                         <td>${user.lastName}</td>
                         <td>${user.role.role_name}</td>
-                        <td><a href="<c:url value='UserServle?'> <c:param name='action' value='edit'/> <c:param name='email' value='${user.email}'/></c:url>>">Edit</a></td>
+                        <td><a href="<c:url value='UserServlet?'> <c:param name='action' value='edit'/> <c:param name='email' value='${user.email}'/></c:url>>">Edit</a></td>
                         <td><a href="<c:url value='UserServlet?'> <c:param name='action' value='delete'/> <c:param name='email' value='${user.email}'/></c:url>>">Delete</a></td>
                     </tr>
                 </c:forEach>
@@ -45,7 +45,7 @@
          </form>
         
          <c:if test="${selectedUser eq null}">
-             <form method="post">
+             <form method="post" action="UserServlet">
                 <h1>Add User</h1>
                 Email: <input type="text" name="email"><br>
                 First Name: <input type="text" name="fname"><br>
@@ -80,13 +80,14 @@
             </select><br>
             <input type="hidden" name="action" value="update">
             <input type="hidden" name="email" value="${selectedUser.email}">
-            <input type="submit" name="action" value="Update">
+            <input type="submit" value="Update">
             </form>
-         </c:if>
-        <form>
-            <input type="hidden" name="action" value="cancel">
-            <input type="submit" name="action" value="Cancel">
-        </form>
+         
+            <form>
+                <input type="hidden" name="action" value="cancel">
+                <input type="submit" value="Cancel">
+            </form>
+        </c:if>
         <p>${message}</p>
     </body>
 </html>
