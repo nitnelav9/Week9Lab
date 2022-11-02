@@ -32,12 +32,12 @@
                     </tr>
                 <c:forEach items="${users}" var="user">
                     <tr>
-                        <td>${user.email}</td>
-                        <td>${user.firstName}</td>
-                        <td>${user.lastName}</td>
-                        <td>${user.role.role_name}</td>
-                        <td><a href="<c:url value='UserServlet?'> <c:param name='action' value='edit'/> <c:param name='email' value='${user.email}'/></c:url>>">Edit</a></td>
-                        <td><a href="<c:url value='UserServlet?'> <c:param name='action' value='delete'/> <c:param name='email' value='${user.email}'/></c:url>>">Delete</a></td>
+                        <td>${user.getEmail()}</td>
+                        <td>${user.getFirstName()}</td>
+                        <td>${user.getLastName()}</td>
+                        <td>${user.getRole().getRoleName()}</td>
+                        <td><a href="<c:url value='UserServlet?'> <c:param name='action' value='edit'/> <c:param name='email' value='${user.getEmail()}'/></c:url>>">Edit</a></td>
+                        <td><a href="<c:url value='UserServlet?'> <c:param name='action' value='delete'/> <c:param name='email' value='${user.getEmail()}'/></c:url>>">Delete</a></td>
                     </tr>
                 </c:forEach>
                 </table>
@@ -53,7 +53,7 @@
                 Password: <input type="password" name="password"><br>
                 Role: <select name="roles">
                 <c:forEach items="${roles}" var="role">
-                    <option value="${role.role_id}">${role.role_name}</option>
+                    <option value="${role.getRoleId()}">${role.getRoleName()}</option>
                 </c:forEach>
             </select><br>
             <input type="hidden" name="action" value="add">
@@ -65,21 +65,21 @@
              <form method="post" action="UserServlet">
                 <h1>Edit User</h1>
                 Email: ${selectedUser.email}<br>
-                First Name: <input type="text" name="fname" value="${selectedUser.firstName}"><br>
-                Last Name: <input type="text" name="lname" value="${selectedUser.lastName}"><br>
+                First Name: <input type="text" name="fname" value="${selectedUser.getFirstName()}"><br>
+                Last Name: <input type="text" name="lname" value="${selectedUser.getLastName()}"><br>
                 Password: <input type="password" name="password"><br>
                 Role: <select name="roles">
                 <c:forEach items="${roles}" var="role">
-                    <c:if test="${role.role_id eq selectedUser.role.role_id}">
-                    <option value="${role.role_id}" selected>${role.role_name}</option>
+                    <c:if test="${role.getRoleId() eq selectedUser.getRole().getRoleId()}">
+                    <option value="${role.getRoleId()}" selected>${role.getRoleName()}</option>
                     </c:if>
-                    <c:if test="${role.role_id ne selectedUser.role.role_id}">
-                    <option value="${role.role_id}">${role.role_name}</option>
+                    <c:if test="${role.getRoleId() ne selectedUser.getRole().getRoleId()}">
+                    <option value="${role.getRoleId()}">${role.getRoleName()}</option>
                     </c:if>
                 </c:forEach>
             </select><br>
             <input type="hidden" name="action" value="update">
-            <input type="hidden" name="email" value="${selectedUser.email}">
+            <input type="hidden" name="email" value="${selectedUser.getEmail()}">
             <input type="submit" value="Update">
             </form>
          
