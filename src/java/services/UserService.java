@@ -30,14 +30,16 @@ public class UserService {
     
     public void insert(String email, String fname, String lname, String password, int role_id) throws Exception {
         Role role = new Role(role_id);
-        User user = new User(email, fname, lname, password, role);
+        User user = new User(email, fname, lname, password);
+        user.setRole(role);
         UserDBUtil userDB = new UserDBUtil();
         userDB.insert(user);
     }
     
     public void update(String email, String fname, String lname, String password, int role_id) throws Exception {
         Role role = new Role(role_id);
-        User user = new User(email,fname,lname,password,role);
+        User user = new User(email,fname,lname,password);
+        user.setRole(role);
         UserDBUtil userDB = new UserDBUtil();
         userDB.update(user);
     }
